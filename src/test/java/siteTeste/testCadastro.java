@@ -1,6 +1,8 @@
 package siteTeste;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,19 +11,27 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class testCadastro {
+    private WebDriver driver;
 
+    @BeforeEach
+    public void setUp () {
+        System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver98\\chromedriver.exe");
+        driver = new ChromeDriver();
+
+        String link = "https://inm-test-app.herokuapp.com/accounts/login/";
+        driver.get(link);
+        driver.manage().window().maximize();
+    }
+
+    @AfterEach
+    public void tearDown () {
+        driver.quit();
+    }
     @Test
     public void cadsatroDeNovoUsuarioComSucesso () {
 
         String mensagemEsperada;
 
-        System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver98\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-
-        String link = "https://inm-test-app.herokuapp.com/accounts/login/";
-        driver.get(link);
-        driver.manage().window().maximize();
-//
 //        //link novo cadastro
 //        driver.findElement(By.xpath("/html/body/div/div[2]/div/form/div[7]/a")).click();
 
@@ -82,7 +92,5 @@ public class testCadastro {
 //        String alertExcluido = driver.findElement((By.cssSelector("body > div > div.container-message > div"))).getText();
 //        Assertions.assertEquals("SUCESSO! Funcionário removido com sucesso\n" +
 //                "×", alertExcluido);
-
-        driver.quit();
     }
 }
